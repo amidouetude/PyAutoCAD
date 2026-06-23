@@ -15,6 +15,7 @@ class WorkerTask:
 
 class COMWorker:
     def __init__(self, shutdown_timeout: float = 1.0) -> None:
+        """Create a single-threaded worker that waits up to shutdown_timeout seconds when stopping."""
         self._tasks: "queue.Queue[Optional[WorkerTask]]" = queue.Queue()
         self._shutdown_timeout = shutdown_timeout
         self._thread = threading.Thread(target=self._run, daemon=True)
