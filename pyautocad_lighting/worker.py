@@ -14,8 +14,9 @@ class WorkerTask:
 
 
 class COMWorker:
-    def __init__(self) -> None:
+    def __init__(self, shutdown_timeout: float = 1.0) -> None:
         self._tasks: "queue.Queue[Optional[WorkerTask]]" = queue.Queue()
+        self._shutdown_timeout = shutdown_timeout
         self._thread = threading.Thread(target=self._run, daemon=True)
         self._thread.start()
 
@@ -38,8 +39,9 @@ class COMWorker:
         )
 
     def shutdown(self) -> None:
+        """Wait briefly for the worker thread to stop after the current task completes."""
         self._tasks.put(None)
-        self._thread.join(timeout=1)
+        self._thread.join(timeout=self._shutdown_timeout)
 
     def _run(self) -> None:
         pythoncom = None

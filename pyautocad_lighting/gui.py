@@ -124,7 +124,12 @@ class LightingApp(tk.Tk):
             messagebox.showwarning("No rooms selected", "Select at least one room before placing fixtures.")
             return
 
-        options = self._options()
+        try:
+            options = self._options()
+        except ValueError as error:
+            messagebox.showwarning("Invalid settings", str(error))
+            return
+
         plans, next_circuit = build_batch_plan(selected_rooms, options, self._next_circuit)
         self._set_status(f"Placing lights in {len(plans)} room(s)...")
 
@@ -158,9 +163,13 @@ class LightingApp(tk.Tk):
         return [self._room_lookup[index] for index in self.room_listbox.curselection()]
 
     def _options(self) -> PlacementOptions:
+        lights_per_room = int(self.lights_var.get())
+        if lights_per_room < 1:
+            raise ValueError("Lights per room must be at least 1.")
+
         return PlacementOptions(
             fixture=FIXTURE_TYPES[self.fixture_var.get()],
-            lights_per_room=max(1, int(self.lights_var.get())),
+            lights_per_room=lights_per_room,
             draw_wires=bool(self.draw_wires_var.get()),
             add_labels=bool(self.add_labels_var.get()),
             wire_bulge=float(self.bulge_var.get()),

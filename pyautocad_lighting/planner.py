@@ -30,10 +30,10 @@ def build_room_plan(room: Room, options: PlacementOptions, circuit_number: int) 
         for point in fixture_points
     ]
 
-    wires = [
+    wires = [] if not options.draw_wires else [
         WirePlacement(start=start, end=end, bulge=options.wire_bulge, layer=WIRE_LAYER)
         for start, end in ordered_connections(fixture_points)
-    ] if options.draw_wires else []
+    ]
 
     labels = []
     if options.add_labels:

@@ -34,7 +34,7 @@ class AutoCADClient:
     def scan_rooms(self) -> List[Room]:
         self._ensure_connected()
         rooms: List[Room] = []
-        for index, entity in enumerate(self._model_space):
+        for entity in self._model_space:
             object_name = getattr(entity, "ObjectName", "")
             if object_name not in {"AcDbPolyline", "AcDb2dPolyline"}:
                 continue
