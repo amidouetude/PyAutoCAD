@@ -85,6 +85,7 @@ def grid_points(room: Room, count: int) -> List[Point]:
 
 
 def ordered_connections(points: List[Point]) -> List[Tuple[Point, Point]]:
+    """Sort points by row then column and connect each point to the next one."""
     if len(points) < 2:
         return []
 
@@ -93,4 +94,5 @@ def ordered_connections(points: List[Point]) -> List[Tuple[Point, Point]]:
 
 
 def label_position(room: Room, offset_x: float, offset_y: float) -> Point:
+    """Place a label relative to the room's top-right corner using offsets."""
     return (room.max_x + offset_x, room.max_y + offset_y)

@@ -91,6 +91,7 @@ class AutoCADClient:
 
 
 def _polyline_points(coordinates: Iterable[float]) -> List[Point]:
+    """Convert flat polyline coordinates into consecutive (x, y) point tuples."""
     values = list(coordinates)
     return [(values[index], values[index + 1]) for index in range(0, len(values), 2)]
 

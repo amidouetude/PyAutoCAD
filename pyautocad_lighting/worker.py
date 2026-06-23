@@ -49,7 +49,7 @@ class COMWorker:
             pythoncom = imported_pythoncom
             pythoncom.CoInitialize()
         except ImportError:
-            pythoncom = None
+            pass
 
         while True:
             task = self._tasks.get()

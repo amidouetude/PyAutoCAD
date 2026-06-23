@@ -13,6 +13,7 @@ from pyautocad_lighting.models import (
 
 
 def _label_text(options: PlacementOptions, circuit_number: int) -> str:
+    """Build the circuit label from either an incrementing index or a fixed value."""
     if options.auto_increment_labels:
         return f"{options.label_prefix}{circuit_number}"
     return options.fixed_label or options.label_prefix
@@ -60,4 +61,3 @@ def build_batch_plan(
         if options.auto_increment_labels:
             circuit_number += 1
     return plans, circuit_number
-
