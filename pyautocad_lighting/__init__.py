@@ -1,0 +1,2 @@
+"""PyAutoCAD lighting placement application."""
+
