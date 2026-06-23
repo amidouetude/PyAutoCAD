@@ -24,8 +24,10 @@ A Tkinter-based GUI application that automates the placement of lighting fixture
 ## Installation
 
 ```bash
-pip install pyautocad pywin32
+pip install pywin32
 ```
+
+`pyautocad` can still be installed alongside the app if you want it available in your AutoCAD Python environment, but the current implementation talks to AutoCAD through `pywin32`.
 
 ## Usage
 
@@ -48,4 +50,4 @@ Workflow:
 - Windows
 - AutoCAD 2007 or newer
 - Python 3.6+
-- `pyautocad` and `pywin32`
+- `pywin32` (`pyautocad` optional)

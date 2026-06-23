@@ -1,6 +1,11 @@
 import unittest
 
-from pyautocad_lighting.geometry import grid_points, rectangle_from_polyline
+from pyautocad_lighting.geometry import (
+    grid_points,
+    label_position,
+    ordered_connections,
+    rectangle_from_polyline,
+)
 
 
 class RectangleDetectionTests(unittest.TestCase):
@@ -46,6 +51,26 @@ class GridPlacementTests(unittest.TestCase):
             self.assertLess(x, room.max_x)
             self.assertGreater(y, room.min_y)
             self.assertLess(y, room.max_y)
+
+    def test_ordered_connections_sort_points_before_linking(self):
+        points = [(4, 4), (2, 2), (6, 2)]
+
+        self.assertEqual(
+            ordered_connections(points),
+            [((2, 2), (6, 2)), ((6, 2), (4, 4))],
+        )
+
+    def test_ordered_connections_handles_small_inputs(self):
+        self.assertEqual(ordered_connections([]), [])
+        self.assertEqual(ordered_connections([(1, 1)]), [])
+
+    def test_label_position_adds_offsets_to_room_max_coordinates(self):
+        room = rectangle_from_polyline(
+            "Room 1",
+            [(0, 0), (6, 0), (6, 4), (0, 4), (0, 0)],
+        )
+
+        self.assertEqual(label_position(room, 100, 200), (106, 204))
 
 
 if __name__ == "__main__":
