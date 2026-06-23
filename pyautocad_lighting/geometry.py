@@ -94,5 +94,5 @@ def ordered_connections(points: List[Point]) -> List[Tuple[Point, Point]]:
 
 
 def label_position(room: Room, offset_x: float, offset_y: float) -> Point:
-    """Place a label from the top-right room corner in AutoCAD world coordinates, where positive offsets move right and up."""
+    """Place a label by adding the provided offsets to the room's max_x and max_y coordinates."""
     return (room.max_x + offset_x, room.max_y + offset_y)
