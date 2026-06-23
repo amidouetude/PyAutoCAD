@@ -1,5 +1,5 @@
 import logging
-from typing import Iterable, List, Sequence
+from typing import Any, Iterable, List, Sequence
 
 from pyautocad_lighting.geometry import rectangle_from_polyline
 from pyautocad_lighting.models import Point, Room, RoomPlan
@@ -95,7 +95,7 @@ def _polyline_points(coordinates: Iterable[float]) -> List[Point]:
     return [(values[index], values[index + 1]) for index in range(0, len(values), 2)]
 
 
-def _point3d(point: Point):
+def _point3d(point: Point) -> Any:
     try:
         import pythoncom
         import win32com.client

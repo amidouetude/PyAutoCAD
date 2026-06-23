@@ -1,5 +1,5 @@
 import math
-from typing import Iterable, List, Optional, Tuple
+from typing import Iterable, Iterator, List, Optional, Tuple
 
 from pyautocad_lighting.models import Point, Room
 
@@ -37,14 +37,18 @@ def rectangle_from_polyline(identifier: str, points: Iterable[Point]) -> Optiona
     return Room(identifier=identifier, min_x=xs[0], min_y=ys[0], max_x=xs[1], max_y=ys[1])
 
 
-def _candidate_layouts(count: int):
+def _candidate_layouts(count: int) -> Iterator[Tuple[int, int]]:
     for rows in range(1, count + 1):
         cols = math.ceil(count / rows)
         yield rows, cols
 
 
 def _layout_score(room: Room, rows: int, cols: int, count: int) -> float:
-    aspect_ratio = room.width / room.height if room.height else float("inf")
+    aspect_ratio = (
+        room.width / room.height
+        if not _almost_equal(room.height, 0.0)
+        else float("inf")
+    )
     grid_ratio = cols / rows
     unused = rows * cols - count
     return abs(grid_ratio - aspect_ratio) + unused * 0.1
